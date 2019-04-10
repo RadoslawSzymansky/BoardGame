@@ -4,13 +4,8 @@
 }
 
 .container {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-pack: distribute;
   justify-content: space-around;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
   width: 100vw;
   height: 100vh;
@@ -29,18 +24,9 @@
   background-color: #e6e1e1;
   height: 100%;
   width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
   flex-direction: column;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
   justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
 }
 
@@ -71,51 +57,40 @@
 }
 
 .boardWrapper {
-  -webkit-box-shadow: 0 0 1px 1px red;
   box-shadow: 0 0 1px 1px red;
 }
 
 .board {
   min-width: 300px;
   min-height: 300px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
 
 .boardWrapper div {
   width: 14%;
-  -ms-flex-preferred-size: 14.26%;
   flex-basis: 14.26%;
-  -webkit-box-shadow: 0px 0px 1px 1px grey;
   box-shadow: 0px 0px 1px 1px grey;
   background-color: #d1cdcd;
+  max-height: 14.26%;
 }
 
 .boardWrapper .boxOff {
   background-color: #555555;
 }
 
-.boardWrapper .boxOn {
-  position: relative;
-  top: 0;
-  left: 0
-}
-
 .boardWrapper .boxOn.disActive {
-  background-color: #7c7c7c;
+  background-color: #926f6f;
 }
 
 .boardWrapper .boxOn.movePossible {
-  background-color: #fff;
+  background-color: rgb(243, 199, 199);
+
 }
 
 .boardWrapper .boxOn.horse {
   background-image: url("/images/32904.svg");
   background-position: center;
   background-size: 100%;
+  position: relative;
 }
-
-/*# sourceMappingURL=style.css.map */

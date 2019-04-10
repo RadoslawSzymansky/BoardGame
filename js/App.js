@@ -6,43 +6,58 @@ function startGame(e) {
     var P1 = elements.inputP2.value
     if (!P1 || !P2 || P1 === P2) return alert('Niepoprawne nazwy')
     elements.form.classList.add('boxOff');
-    game = new Game(P1, P2)
+    game = new Game(new Player(P1), new Player(P2))
     game.initBoard()
 }
-
-function dropHorse(e) {
+var lastMove;
+var movementX = 0;
+var movementY = 0;
+const puszczam = (e) => {
     // funckja ktora wylacza zdarzenie moumove na window
-    console.log("puszczam");
-    e.target.removeEventListener("mousemove", rideHorse, false);
-}
-const rideHorse = (e) => {
-    // funkcja ktora mowi co ma sie dziac bo ruchu myszka, e to przekazane zdarzenie
-    console.log("jezdze myszka po ekranie");
-    // roznica to odleglosc myszki od krawwedzi elementu, wyliczona w odpowiedni sposob
-    // (od odleglosci myszki od topu okna odejmuje sie krawedz elemntu ktory mierzymy)
-    const roznicaX = e.clientX - e.target.offsetLeft;
-    const roznicaY = e.clientY - e.target.offsetTop;
-    // ustawienie srodka elementu na miejsce klikniecia (pierw wyliczenie tego srodka
-    // poprzez dodanie do odleglosci elentu od krawedzi przegladarki roznicy i odjecie polowy wielkosci elemntu)
-    const divCenterX =
-        e.target.offsetLeft + roznicaX - e.target.offsetWidth / 2;
-    const divCenterY =
-        e.target.offsetTop + roznicaY - e.target.offsetHeight / 2;
+    game.currentPlayer.possibleMoves.forEach(e => e.classList.remove("movePossible"))
 
-    e.target.style.left = divCenterX + "px";
-    e.target.style.top = divCenterY + "px";
-    // dodanie nasluchiwania na zdarzenie puszczenia myszki co wywola funckje puszczam
-    e.target.addEventListener("mouseup", dropHorse);
+    window.removeEventListener("mousemove", jezdze, false);
+    lastMove.style.left = 0 + "px";
+    lastMove.style.top = 0 + "px";
+    movementX = 0;
+    movementY = 0;
+    const target = document.elementFromPoint(e.clientX, e.clientY);
+    if (game.currentPlayer.move(target)) {
+        lastMove.classList.remove("horse")
+        lastMove.removeAttribute("id")
+        lastMove.classList.add("disActive")
+        target.classList.add("horse")
+        target.setAttribute("id", game.currentPlayer.name)
+        game.currentPlayer.updateHorse(lastMove.dataset.pos, target.dataset.pos)
+        console.log(game.currentPlayer.horses);
+        game.changePlayer()
+
+    }
+    game.currentPlayer.possibleMoves.forEach(e => e.classList.remove("movePossible"))
+
+    return;
 };
 
-function moveHorse(horse) {
-    console.log("trzymam");
-    elements.board.addEventListener("mousemove", rideHorse);
-}
+const jezdze = e => {
+    movementY += e.movementY
+    movementX += e.movementX
+    lastMove.style.left = movementX + "px";
+    lastMove.style.top = movementY + "px";
+    // dodanie nasluchiwania na zdarzenie puszczenia myszki co wywola funckje puszczam
+    e.target.addEventListener("mouseup", puszczam);
+    game.currentPlayer.checkMoves(lastMove);
+    game.currentPlayer.possibleMoves.forEach(e => e.classList.add("movePossible"))
+};
+const moveHorse = e => {
+    // trzymam myszke wiec wlacza nasluchiiwanie na poruszenie ( na window poniewaz wtedy prowadzi nawet jak zjedziesz  z diva, ta fukcje trzeba wylaczyc po puszczeniu klawicza)
+    window.addEventListener("mousemove", jezdze);
+    //
+};
 // events
-elements.board.addEventListener('mousedown', function (e) {
+window.addEventListener('mousedown', function (e) {
     if (e.target.classList.contains('boxOn') && e.target.classList.contains('horse')) {
-        if (e.target.id === game.currentPlayer) moveHorse(e.target)
+        lastMove = e.target
+        if (e.target.id === game.currentPlayer.name) moveHorse()
     }
 })
 elements.form.addEventListener('submit', startGame);
