@@ -22,8 +22,20 @@ Player.prototype.checkMoves = function (horse) {
     [...elements.board.querySelectorAll('div')].forEach(box => {
         var boxData = box.dataset.pos
         if (!box.classList.contains('horse') && !box.classList.contains('disActive')) {
-            if (boxData == pos - 6 || boxData == pos + 6) this.possibleMoves.push(box)
-            if (boxData == pos - 8 || boxData == pos + 8) this.possibleMoves.push(box)
+            var boxAmountOnEdge = Math.sqrt(game.board.length);
+            // if left edge
+            if (!(pos % boxAmountOnEdge)) {
+                if (boxData == pos - 13 || boxData == pos + 15 || boxData == pos + 9) this.possibleMoves.push(box)
+                return
+            }
+            //  if right edge
+            else if (!((pos + 1) % boxAmountOnEdge)) {
+                if (boxData == pos + 13 || boxData == pos - 15 || boxData == pos - 9) this.possibleMoves.push(box)
+                return
+            }
+            // if beetwen edges
+            if (boxData == pos + 15 || boxData == pos - 15 || boxData == pos - 13 || boxData == pos + 13) this.possibleMoves.push(box)
+
         }
     })
 }

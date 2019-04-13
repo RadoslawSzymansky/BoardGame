@@ -1,23 +1,20 @@
 * {
   padding: 0;
-  margin: 0;
-}
+  margin: 0; }
 
 .container {
   display: flex;
   justify-content: space-around;
   align-items: center;
   width: 100vw;
-  height: 100vh;
-}
+  height: 100vh; }
 
 .results {
   border: 1px solid green;
   min-width: 400px;
   min-height: 400px;
   position: relative;
-  background-color: #bebebe;
-}
+  background-color: #bebebe; }
 
 .setPlayersForm {
   position: absolute;
@@ -27,70 +24,67 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-}
+  align-items: center; }
 
 .results h2,
 .results h3 {
   padding: 5px;
-  margin-bottom: 15px;
-}
+  margin-bottom: 15px; }
 
 .results .possibleMoves {
-  padding: 5px;
-}
+  padding: 5px; }
 
 .results span {
-  color: #4e4e4e;
-}
+  color: #4e4e4e; }
 
 .setPlayersForm.boxOff {
-  display: none;
-}
+  display: none; }
 
 .results h3 span {
-  color: red;
-}
+  color: red; }
 
 .setPlayersForm input {
-  margin-bottom: 10px;
-}
+  margin-bottom: 10px; }
 
 .boardWrapper {
-  box-shadow: 0 0 1px 1px red;
-}
+  box-shadow: 0 0 1px 1px red; }
 
 .board {
   min-width: 300px;
   min-height: 300px;
   display: flex;
-  flex-wrap: wrap;
-}
+  flex-wrap: wrap; }
 
 .boardWrapper div {
   width: 14%;
   flex-basis: 14.26%;
   box-shadow: 0px 0px 1px 1px grey;
   background-color: #d1cdcd;
-  max-height: 14.26%;
-}
+  max-height: 14.26%; }
 
 .boardWrapper .boxOff {
-  background-color: #555555;
-}
+  background-color: #555555; }
 
 .boardWrapper .boxOn.disActive {
-  background-color: #926f6f;
-}
+  background-color: #7c7c7c; }
+
+.boardWrapper .boxOff.disActive {
+  background-color: #7c7c7c; }
 
 .boardWrapper .boxOn.movePossible {
-  background-color: rgb(243, 199, 199);
+  background-color: #fff; }
 
-}
+.boardWrapper .boxOff.movePossible {
+  background-color: #fff; }
 
 .boardWrapper .boxOn.horse {
   background-image: url("/images/32904.svg");
   background-position: center;
   background-size: 100%;
-  position: relative;
-}
+  position: relative; }
+
+.boardWrapper .boxOff.horse {
+  background-image: url("/images/32904.svg");
+  background-position: center;
+  background-size: 100%;
+  position: relative; }

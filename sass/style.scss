@@ -74,6 +74,7 @@
     flex-basis: 14.26%;
     box-shadow: 0px 0px 1px 1px grey;
     background-color: rgb(209, 205, 205);
+    max-height: 14.26%
 }
 
 .boardWrapper .boxOff {
@@ -84,7 +85,15 @@
     background-color: rgb(124, 124, 124);
 }
 
+.boardWrapper .boxOff.disActive {
+    background-color: rgb(124, 124, 124);
+}
+
 .boardWrapper .boxOn.movePossible {
+    background-color: #fff;
+}
+
+.boardWrapper .boxOff.movePossible {
     background-color: #fff;
 }
 
@@ -92,4 +101,12 @@
     background-image: url('/images/32904.svg');
     background-position: center;
     background-size: 100%;
+    position: relative;
+}
+
+.boardWrapper .boxOff.horse {
+    background-image: url('/images/32904.svg');
+    background-position: center;
+    background-size: 100%;
+    position: relative;
 }

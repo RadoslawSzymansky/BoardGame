@@ -9,13 +9,13 @@ function startGame(e) {
     game = new Game(new Player(P1), new Player(P2))
     game.initBoard()
 }
+var gamePlayed = 0;
 var lastMove;
 var movementX = 0;
 var movementY = 0;
 const puszczam = (e) => {
     // funckja ktora wylacza zdarzenie moumove na window
     game.currentPlayer.possibleMoves.forEach(e => e.classList.remove("movePossible"))
-
     window.removeEventListener("mousemove", jezdze, false);
     lastMove.style.left = 0 + "px";
     lastMove.style.top = 0 + "px";
@@ -29,12 +29,13 @@ const puszczam = (e) => {
         target.classList.add("horse")
         target.setAttribute("id", game.currentPlayer.name)
         game.currentPlayer.updateHorse(lastMove.dataset.pos, target.dataset.pos)
-        console.log(game.currentPlayer.horses);
-        game.changePlayer()
-
+        game.changePlayer();
+        gamePlayed++;
+    }
+    if (gamePlayed > 1) {
+        game.checkGameResult()
     }
     game.currentPlayer.possibleMoves.forEach(e => e.classList.remove("movePossible"))
-
     return;
 };
 
@@ -45,19 +46,23 @@ const jezdze = e => {
     lastMove.style.top = movementY + "px";
     // dodanie nasluchiwania na zdarzenie puszczenia myszki co wywola funckje puszczam
     e.target.addEventListener("mouseup", puszczam);
-    game.currentPlayer.checkMoves(lastMove);
+    // game.currentPlayer.checkMoves(lastMove);
     game.currentPlayer.possibleMoves.forEach(e => e.classList.add("movePossible"))
 };
 const moveHorse = e => {
     // trzymam myszke wiec wlacza nasluchiiwanie na poruszenie ( na window poniewaz wtedy prowadzi nawet jak zjedziesz  z diva, ta fukcje trzeba wylaczyc po puszczeniu klawicza)
     window.addEventListener("mousemove", jezdze);
-    //
+    game.currentPlayer.checkMoves(lastMove);
+
 };
 // events
 window.addEventListener('mousedown', function (e) {
-    if (e.target.classList.contains('boxOn') && e.target.classList.contains('horse')) {
+    if (e.target.classList.contains('horse')) {
         lastMove = e.target
-        if (e.target.id === game.currentPlayer.name) moveHorse()
+        if (e.target.id === game.currentPlayer.name) {
+            game.currentPlayer.lastMove = e.target
+            moveHorse();
+        }
     }
 })
 elements.form.addEventListener('submit', startGame);
